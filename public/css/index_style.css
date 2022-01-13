@@ -1,0 +1,83 @@
+/* CSS Document */
+
+button {
+	border: none; 
+	background-color: burlywood; 
+	height: 50px;
+	width: 20%;
+	outline: none;
+	font-weight: bold;
+	font-size: 18px;
+}
+button:hover{
+	border: none; 
+	background-color:chocolate; 
+	height: 50px;
+	width: 20%;
+	outline: none;
+	font-weight: bold;
+	font-size: 18px;
+}
+#plate{
+	margin-left: 0px;
+	margin-right: 0px;
+	height: 50px;
+	width: auto;
+	background-color: antiquewhite;
+	border-left: 10px;
+	border-right: 10px;
+	align-items:baseline;
+}
+#all_items{
+	height: auto;
+	width: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	margin-left: 50px;
+	margin-right: 50px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: antiquewhite;
+}
+.item{
+	height: 40px;
+	width: auto;
+	background-color: burlywood;
+	align-items: center;
+	margin-bottom: 3px;
+}
+.item_category{
+	height: 40px;
+	width: 20%;
+	text-align:center;
+	line-height: 40px;
+	float: left;
+}
+.item_belong{
+	height: 40px;
+	width: 20%;
+	text-align:center;
+	line-height: 40px;
+	float: left;
+}
+.item_name{
+	height: 40px;
+	width: 30%;
+	text-align:center;
+	line-height: 40px;
+	float: left;
+}
+.item_invove_num{
+	height: 40px; 
+	width: 20%;
+	line-height: 40px;
+	text-align: center;
+	float: left
+}
+.item_score{
+	height: 40px; 
+	width: 10%;
+	line-height: 40px;
+	text-align: center;
+	float: left
+}

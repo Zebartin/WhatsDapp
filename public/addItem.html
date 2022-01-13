@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<link rel="stylesheet" href="./bootstrap-3.4.1-dist/css/bootstrap.min.css">
+<title>添加新的Item</title>
+</head>
+
+<body style="background-image:url(image/background_image.jpg); background-repeat:no-repeat; height: 100%; width: 100%;">
+	<form action="/" method="post" enctype="multipart/form-data">
+		<table class="table table-striped">
+		<tr>
+			<th>分类：</th>
+			<td>
+				<input type="text" name="category" style="resize:none;margin-top: 2px;margin-bottom: 2px;"  />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>所属：</th>
+			<td><input type="text" name="belong" cols="20" rows="1" style="resize:none;margin-top: 2px;margin-bottom: 2px;"  /></td>
+		</tr>
+		
+		<tr>
+			<th>名称：</th>
+			<td><input type="text" name="name" style="resize:none;margin-top: 2px;margin-bottom: 2px;"  /></td>
+		</tr>
+		
+		<tr>
+			<th>详细：</th>
+			<td><input type="text" name="detail" style="resize:none;margin-top: 2px; margin-bottom: 2px; height: 100px; width: 500px;"  /></td>
+		</tr>
+		
+	</table>
+	<div>
+		<h4>上传照片：</h4>
+		<input type="file" accept="image/*" name="image">
+	</div>
+
+	<div>
+		<input type="submit" value="确定提交" style="margin-top: 20px;">
+	</div>
+</form>
+</body>
+</html>
