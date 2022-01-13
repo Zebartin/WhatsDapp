@@ -13,7 +13,8 @@ contract Review {
         string[] infoAttrs; // 具体信息，比如学校、出版时间等
         string[] infoVals;	// 具体信息值，比如北大、2012年5月等
     }
-    Item[] public items; // 所有的项目
+		uint256 public itemCnt;
+    mapping(uint256 => Item) public items; // 所有的项目
 
 		// 创建新Item
     function createItem(
@@ -21,11 +22,12 @@ contract Review {
         string[] memory attrs,
         string[] memory vals
     ) public returns (uint256) {
-        Item memory it;
+        Item storage it = items[itemCnt];
+				itemCnt = itemCnt + 1;
         it.name = name;
         it.infoAttrs = attrs;
         it.infoVals = vals;
-        return items.push(it);
+        return itemCnt - 1;
     }
 
 		// 写评论
@@ -39,7 +41,7 @@ contract Review {
         it.commentCnt = it.commentCnt + 1;
         com.rating = rating;
         com.content = content;
-        return it.commentCnt;
+        return it.commentCnt - 1;
     }
 
     // 查看Item除了评论具体内容以外的所有信息
