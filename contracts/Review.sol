@@ -8,13 +8,14 @@ contract Review {
     }
     struct Item {
         string name; // 项目名称
-        uint256 commentCnt;
+        uint256 commentCnt;	// 评论数量
         mapping(uint256 => Comment) comments; // 此项目的所有评论
-        string[] infoAttrs; // 具体信息，比如学院、出版时间等
-        string[] infoVals;
+        string[] infoAttrs; // 具体信息，比如学校、出版时间等
+        string[] infoVals;	// 具体信息值，比如北大、2012年5月等
     }
     Item[] public items; // 所有的项目
 
+		// 创建新Item
     function createItem(
         string memory name,
         string[] memory attrs,
@@ -27,13 +28,21 @@ contract Review {
         return items.push(it);
     }
 
+		// 写评论
     function makeComment(
         uint256 itemID,
         uint256 rating,
         string memory content
-    ) public returns (uint256) {}
+    ) public returns (uint256) {
+        Item storage it = items[itemID];
+        Comment storage com = it.comments[it.commentCnt];
+        it.commentCnt = it.commentCnt + 1;
+        com.rating = rating;
+        com.content = content;
+        return it.commentCnt;
+    }
 
-    // 免费查看Item除了评论具体内容以外的所有信息
+    // 查看Item除了评论具体内容以外的所有信息
     function readItem(uint256 itemID)
         public
         view
@@ -52,9 +61,13 @@ contract Review {
         return (it.name, it.infoAttrs, it.infoVals, ratings);
     }
 
-    // 付费查看评论内容
+    // 查看评论内容
     function readCommentContent(uint256 itemID, uint256 commentID)
         public
+        view
         returns (string memory)
-    {}
+    {
+        Item storage it = items[itemID];
+        return it.comments[commentID].content;
+    }
 }
