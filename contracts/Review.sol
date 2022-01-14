@@ -10,8 +10,6 @@ contract Review {
         string name; // 项目名称
         uint256 commentCnt; // 评论数量
         mapping(uint256 => Comment) comments; // 此项目的所有评论
-        string[] infoAttrs; // 具体信息，比如学校、出版时间等
-        string[] infoVals; // 具体信息值，比如北大、2012年5月等
     }
     uint256 public itemCnt;
     mapping(uint256 => Item) public items; // 所有的项目
@@ -46,8 +44,6 @@ contract Review {
         view
         returns (
             string memory,
-            string[] memory,
-            string[] memory,
             uint256[] memory
         )
     {
@@ -56,7 +52,7 @@ contract Review {
         for (uint256 i = 0; i < it.commentCnt; i++) {
             ratings[i] = it.comments[i].rating;
         }
-        return (it.name, it.infoAttrs, it.infoVals, ratings);
+        return (it.name, ratings);
     }
 
     // 查看评论内容

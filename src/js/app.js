@@ -3,6 +3,7 @@ App = {
   contracts: {},
 
   init: async function () {
+    console.log('app init');
     // Load pets.
     // $.getJSON('../pets.json', function(data) {
     //   var petsRow = $('#petsRow');
@@ -58,60 +59,23 @@ App = {
       App.contracts.Review.setProvider(App.web3Provider);
 
       // Use our contract to retrieve and mark the adopted pets
-      return App.markAdopted();
+      return App.initAllItems();
     });
-
-
-    return App.bindEvents();
   },
 
-  bindEvents: function () {
-    // $(document).on('click', '.mentor', App.handleAdopt);
-  },
 
   initAllItems: async function () {
     let instance = await App.contracts.Review.deployed();
     let itemCnt = await instance.itemCnt.call();
     let data = [];
-    for (i = 0; i < itemCnt; i++)
-      data.push(await App.readItem(i));
-          var itemTable = $('#allItems');
-      var itemTemplate = $('#itemTemplate');
-      console.log(data);
-      for (i = 0; i < data.length; i++) {
-        var itemdiv = $('<div></div>');
-        itemdiv.addClass('item');
-        var coldiv = $('<div></div>');
-        coldiv.addClass('item-category');
-        coldiv.text('TODO');
-        coldiv.appendTo(itemdiv);
-
-        coldiv = $('<div></div>');
-        coldiv.addClass('item-belong');
-        coldiv.text('TODO');
-        coldiv.appendTo(itemdiv);
-
-        coldiv = $('<div></div>');
-        coldiv.addClass('item-name');
-        coldiv.text(data[i][0])
-        coldiv.appendTo(itemdiv);
-
-        coldiv = $('<div></div>');
-        coldiv.addClass('item-involve-num');
-        coldiv.text(data[i][3].length)
-        coldiv.appendTo(itemdiv);
-
-        let sumScore = data[i][3].reduce((sum, x) => sum+Number(x),0);
-        coldiv = $('<div></div>');
-        coldiv.addClass('item-score');
-        if (data[i][3].length === 0)
-          coldiv.text('暂无评分');
-        else
-          coldiv.text(sumScore / data[i][3].length);
-        coldiv.appendTo(itemdiv);
-
-        itemdiv.appendTo(itemTable);
-      }
+    for (i = 0; i < itemCnt; i++){
+      let t = await App.readItem(i);
+      data.push({
+        name: t[0],
+        scores: t[3]
+      })
+    }
+    App.allItems = data;
 },
   createItem: function (event) {
     var itemName;
