@@ -8,29 +8,25 @@ contract Review {
     }
     struct Item {
         string name; // 项目名称
-        uint256 commentCnt;	// 评论数量
+        uint256 commentCnt; // 评论数量
         mapping(uint256 => Comment) comments; // 此项目的所有评论
         string[] infoAttrs; // 具体信息，比如学校、出版时间等
-        string[] infoVals;	// 具体信息值，比如北大、2012年5月等
+        string[] infoVals; // 具体信息值，比如北大、2012年5月等
     }
-		uint256 public itemCnt;
+    uint256 public itemCnt;
     mapping(uint256 => Item) public items; // 所有的项目
 
-		// 创建新Item
+    // 创建新Item
     function createItem(
-        string memory name,
-        string[] memory attrs,
-        string[] memory vals
+        string memory name
     ) public returns (uint256) {
         Item storage it = items[itemCnt];
-				itemCnt = itemCnt + 1;
+        itemCnt = itemCnt + 1;
         it.name = name;
-        it.infoAttrs = attrs;
-        it.infoVals = vals;
         return itemCnt - 1;
     }
 
-		// 写评论
+    // 写评论
     function makeComment(
         uint256 itemID,
         uint256 rating,
