@@ -41,16 +41,16 @@
 		<input id="submit" type="submit" value="确定提交" style="margin-top: 20px;">
 	</div>
 </form>
-<script>
+<script type="text/javascript">
 	document.getElementById('submit').onclick = function(){
 		//这里就是提交按钮点击的相应函数，可以把合约相关的东西里面
 		
-		var info = get_comment();	//获取用户填写的信息
+		var info = get_item();	//获取用户填写的信息
 		
 		//后面是合约部分了
 	}
 	
-	function get_comment(){
+	function get_item(){
 		// 函数将返回这个页面上用户填写的信息（赶工，就不写判空检查了）
 		// 函数饭后的是一个JSON格式的字符串
 		var category = document.getElementsByName('category').value;
@@ -68,6 +68,7 @@
 	
 	function get_back2index(){
 		//这个函数将提示提交成功并在两秒后返回主页
+		window.alert("提交成功，将在两秒后返回主页");
 		setTimeout(set_herf, 2000);
 	}
 	
