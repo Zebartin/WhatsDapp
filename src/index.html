@@ -52,7 +52,7 @@
 			// index是当前为json中第几个item，用来设置id
 
 			var item = document.createElement('div');
-			item.id = 'item' + index;
+			item.id = index;
 			item.className = 'item';
 
 			var category = document.createElement('div');
@@ -66,7 +66,7 @@
 			var name = document.createElement('div');
 			name.className = 'item-name'
 			var name_link = document.createElement('a');
-			name_link.href = 'detail.html?name=' + one_item.name;
+			name_link.href = 'detail.html?id=' + index;
 			name_link.innerHTML = one_item.name;
 			//打开detail网页的时候会传入这个老师的姓名，由detail网页内的脚本负责解析并交由合约去获取数据
 			name.appendChild(name_link);

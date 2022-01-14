@@ -108,12 +108,16 @@ makeComment: function (i, j, k, event) {
   });
 },
 
-readItem: async function (i, event) {
-  let itemID = i;
-  // TODO: 从event中获取
+readItem: async function (itemID) {
   let instance = await App.contracts.Review.deployed();
-  return await instance.readItem.call(itemID);
-
+  let item = await instance.readItem.call(itemID);
+  return {
+    name: item[0],
+    category: '未知',
+    belong: '未知',
+    detail: 'wtf',
+    rating: item[3].map(x=>x.toNumber())
+  }
 }
   // markAdopted: function () {
   //   var adoptionInstance;
