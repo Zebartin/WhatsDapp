@@ -69,6 +69,50 @@ App = {
     // $(document).on('click', '.mentor', App.handleAdopt);
   },
 
+  initAllItems: async function () {
+    let instance = await App.contracts.Review.deployed();
+    let itemCnt = await instance.itemCnt.call();
+    let data = [];
+    for (i = 0; i < itemCnt; i++)
+      data.push(await App.readItem(i));
+          var itemTable = $('#allItems');
+      var itemTemplate = $('#itemTemplate');
+      console.log(data);
+      for (i = 0; i < data.length; i++) {
+        var itemdiv = $('<div></div>');
+        itemdiv.addClass('item');
+        var coldiv = $('<div></div>');
+        coldiv.addClass('item-category');
+        coldiv.text('TODO');
+        coldiv.appendTo(itemdiv);
+
+        coldiv = $('<div></div>');
+        coldiv.addClass('item-belong');
+        coldiv.text('TODO');
+        coldiv.appendTo(itemdiv);
+
+        coldiv = $('<div></div>');
+        coldiv.addClass('item-name');
+        coldiv.text(data[i][0])
+        coldiv.appendTo(itemdiv);
+
+        coldiv = $('<div></div>');
+        coldiv.addClass('item-involve-num');
+        coldiv.text(data[i][3].length)
+        coldiv.appendTo(itemdiv);
+
+        let sumScore = data[i][3].reduce((sum, x) => sum+Number(x),0);
+        coldiv = $('<div></div>');
+        coldiv.addClass('item-score');
+        if (data[i][3].length === 0)
+          coldiv.text('暂无评分');
+        else
+          coldiv.text(sumScore / data[i][3].length);
+        coldiv.appendTo(itemdiv);
+
+        itemdiv.appendTo(itemTable);
+      }
+},
   createItem: function (event) {
     var itemName;
     // TODO: 从event中获取itemName
@@ -79,11 +123,33 @@ App = {
       var a = accounts[0];
       App.contracts.Review.deployed().then(instance => {
         return instance.createItem(itemName, { from: a });
-      }).catch(function (err) {
-        console.log(err.message);
-      });
+      }).catch(err => console.log(err.message));
     });
   },
+
+makeComment: function (i, j, k, event) {
+  let itemID = i;
+  let rating = j;
+  let content = k;
+  // TODO: 从event中获取
+  web3.eth.getAccounts(function (error, accounts) {
+    if (error) {
+      console.log(error);
+    }
+    var a = accounts[0];
+    App.contracts.Review.deployed().then(instance => {
+      return instance.makeComment(itemID, rating, content, { from: a });
+    }).catch(err => console.log(err.message));
+  });
+},
+
+readItem: async function (i, event) {
+  let itemID = i;
+  // TODO: 从event中获取
+  let instance = await App.contracts.Review.deployed();
+  return await instance.readItem.call(itemID);
+
+}
   // markAdopted: function () {
   //   var adoptionInstance;
 

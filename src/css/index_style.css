@@ -28,7 +28,7 @@ button:hover{
 	border-right: 10px;
 	align-items:baseline;
 }
-#all_items{
+#allItems{
 	height: auto;
 	width: auto;
 	margin-top: 30px;
@@ -46,35 +46,35 @@ button:hover{
 	align-items: center;
 	margin-bottom: 3px;
 }
-.item_category{
+.item-category{
 	height: 40px;
 	width: 20%;
 	text-align:center;
 	line-height: 40px;
 	float: left;
 }
-.item_belong{
+.item-belong{
 	height: 40px;
 	width: 20%;
 	text-align:center;
 	line-height: 40px;
 	float: left;
 }
-.item_name{
+.item-name{
 	height: 40px;
 	width: 30%;
 	text-align:center;
 	line-height: 40px;
 	float: left;
 }
-.item_invove_num{
+.item-involve-num{
 	height: 40px; 
 	width: 20%;
 	line-height: 40px;
 	text-align: center;
 	float: left
 }
-.item_score{
+.item-score{
 	height: 40px; 
 	width: 10%;
 	line-height: 40px;
