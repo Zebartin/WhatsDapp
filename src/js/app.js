@@ -69,11 +69,7 @@ App = {
     let itemCnt = await instance.itemCnt.call();
     let data = [];
     for (i = 0; i < itemCnt; i++){
-      let t = await App.readItem(i);
-      data.push({
-        name: t[0],
-        scores: t[3]
-      })
+      data.push(await App.readItem(i));
     }
     return data;
 },
@@ -116,7 +112,7 @@ readItem: async function (itemID) {
     category: '未知',
     belong: '未知',
     detail: 'wtf',
-    rating: item[3].map(x=>x.toNumber())
+    scores: item[3].map(x=>x.toNumber())
   }
 }
   // markAdopted: function () {
