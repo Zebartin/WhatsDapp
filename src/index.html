@@ -101,8 +101,8 @@
 		</div>
 
 		<div id="item10" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
+			<div class="item-category">北京大学</div>
+			<div class="item-belong">软件与微电子学院</div>
 			<div class="item-name"><a href="">郑十</a></div>
 			<div class="item-involve-num">30</div>
 			<div class="item-score">8.7</div>
@@ -115,6 +115,59 @@
 	<script src="js/web3.min.js"></script>
 	<script src="js/truffle-contract.js"></script>
 	<script src="js/app.js"></script>
+	<script>
+		function generate_items(all_items_json){
+			// all_items_json必须为嵌套的JSON格式字符串，必须包括所有的数据，每一个Item的数据格式为{'n':{xxxxx}}
+			// n为从零开始的index，后面的"{xxxxx}"为每个Item的具体数据(也必须为JSON格式字符串），详情见generate_one_item函数注释
+			var all_items = JSON.parse(all_items_json);
+			for(i=0; i<all_items.length; ++i){
+				generate_one_item(JSON.parse(all_items.i), i);
+			}
+		}
+		
+		function generate_one_item(one_item, index){
+			// 传入的参数one_item里面必须有"category","belong","name","name_link","involve_num","score"这几个参数
+			// index是当前为json中第几个item，用来设置id
+			
+			var item = document.createElement('div');
+			item.id = 'item' + index;
+			item.className = 'item';
+			
+			var category = documentcreateElement('div');
+			category.className = 'item-category'
+			category.innerHTML = one_item.category;
+			
+			var belong = documentcreateElement('div');
+			belong.className = 'item-belong';
+			belong.innerHTML = one_item.belong;
+			
+			var name = documentcreateElement('div');
+			name.className = item-name
+			name.innerHTML = one_item.name;
+			
+			var name_link = documentcreateElement('a');
+			name_link.href = 'detail.html?name=' + one_item.name;	
+			//打开detail网页的时候会传入这个老师的姓名，由detail网页内的脚本负责解析并交由合约去获取数据
+			name.appendChild(name_link);
+			
+			var involve_num = documentcreateElement('div');
+			involve_num.className = 'item-involve-num';
+			involve_num.innerHTML = one_item.involve_num;
+			
+			var score = documentcreateElement('div');
+			score.className = 'item-score';
+			score.innerHTML = one_item.score;
+			
+			item.appendChild(category);
+			item.appendChild(belong);
+			item.appendChild(name);
+			item.appendChild(involve_num);
+			item.appendChild(score);
+			
+			var allItems = document.getElementById('allItems');
+			allItems.appendChild(item);
+		}
+	</script>
 </body>
 
 </html>
