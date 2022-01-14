@@ -13,9 +13,8 @@
 	<img id="head_img" style="float: right; height: 80px; width: 80px; margin-right: 3%" src="image/head.png"
 		alt="用户头像" />
 
-	<button id="add_item"
-		style="height: 40px; width: 100px; float: right; margin-right: 10px; margin-top: 20px; font-size: 14px"
-		onClick="">添加Item</button>
+	<a href="addItem.html"><button id="add_item"
+			style="height: 40px; width: 100px; float: right; margin-right: 10px; margin-top: 20px; font-size: 14px">添加Item</button></a>
 
 	<h1>WhatsAPP</h1>
 
@@ -28,87 +27,7 @@
 	</div>
 
 	<div id="allItems">
-
-		<div id="item1" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">刘一</a></div>
-			<div class="item-involve-num">10</div>
-			<div class="item-score">8.5</div>
-		</div>
-
-		<div id="item2" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">陈二</a></div>
-			<div class="item-involve-num">20</div>
-			<div class="item-score">8.2</div>
-		</div>
-
-		<div id="item3" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">张三</a></div>
-			<div class="item-involve-num">30</div>
-			<div class="item-score">8.7</div>
-		</div>
-
-		<div id="item4" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">李四</a></div>
-			<div class="item-involve-num">30</div>
-			<div class="item-score">8.7</div>
-		</div>
-
-		<div id="item5" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">王五</a></div>
-			<div class="item-involve-num">30</div>
-			<div class="item-score">8.7</div>
-		</div>
-
-		<div id="item6" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">赵六</a></div>
-			<div class="item-involve-num">30</div>
-			<div class="item-score">8.7</div>
-		</div>
-
-		<div id="item7" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">孙七</a></div>
-			<div class="item-involve-num">30</div>
-			<div class="item-score">8.7</div>
-		</div>
-
-		<div id="item8" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">周八</a></div>
-			<div class="item-involve-num">30</div>
-			<div class="item-score">8.7</div>
-		</div>
-
-		<div id="item9" class="item">
-			<div class="item-category"><a>北京大学</a></div>
-			<div class="item-belong"><a>软件与微电子学院</a></div>
-			<div class="item-name"><a href="">吴九</a></div>
-			<div class="item-involve-num">30</div>
-			<div class="item-score">8.7</div>
-		</div>
-
-		<div id="item10" class="item">
-			<div class="item-category">北京大学</div>
-			<div class="item-belong">软件与微电子学院</div>
-			<div class="item-name"><a href="">郑十</a></div>
-			<div class="item-involve-num">30</div>
-			<div class="item-score">8.7</div>
-		</div>
-
+		<!-- 在这里加载Items -->
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -119,11 +38,13 @@
 	<script type="text/javascript">
 		function generate_items() {
 			setTimeout(() => {
-				let all_items = App.allItems;
-				for (i = 0; i < all_items.length; ++i) {
-					generate_one_item(all_items[i], i);
-				}
-			}, 1000);
+				App.initAllItems().then(data => {
+					let all_items = data;
+					for (i = 0; i < all_items.length; ++i) {
+						generate_one_item(all_items[i], i);
+					}
+				})
+			}, 300);
 		}
 
 		function generate_one_item(one_item, index) {
@@ -156,9 +77,9 @@
 
 			var score = document.createElement('div');
 			score.className = 'item-score';
-			let sumScore = one_item.scores.reduce((sum, x) => sum+Number(x),0);
+			let sumScore = one_item.scores.reduce((sum, x) => sum + Number(x), 0);
 			if (one_item.scores.length == 0)
-				score.innerHTML='暂无评分';
+				score.innerHTML = '暂无评分';
 			else
 				score.innerHTML = sumScore / one_item.scores.length
 

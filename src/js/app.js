@@ -59,7 +59,7 @@ App = {
       App.contracts.Review.setProvider(App.web3Provider);
 
       // Use our contract to retrieve and mark the adopted pets
-      return App.initAllItems();
+      // return App.initAllItems();
     });
   },
 
@@ -75,19 +75,20 @@ App = {
         scores: t[3]
       })
     }
-    App.allItems = data;
+    return data;
 },
-  createItem: function (event) {
-    var itemName;
-    // TODO: 从event中获取itemName
+  createItem: function (category, belong, name, detail,callback) {
+    console.log('新增导师：'+name);
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
       }
       var a = accounts[0];
       App.contracts.Review.deployed().then(instance => {
-        return instance.createItem(itemName, { from: a });
-      }).catch(err => console.log(err.message));
+        return instance.createItem(name, { from: a });
+      })
+      .then(callback)
+      .catch(err => console.log(err.message));
     });
   },
 

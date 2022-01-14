@@ -1,36 +1,39 @@
 <!doctype html>
 <html>
+
 <head>
-<meta charset="utf-8">
+	<meta charset="utf-8">
 	<link rel="stylesheet" href="./css/bootstrap.min.css">
-<title>添加新的Item</title>
+	<title>添加新的Item</title>
 </head>
 
 <body style="background-image:url(image/background_image.jpg); background-repeat:no-repeat; height: 100%; width: 100%;">
-	<form action="/" name="form1" method="post" enctype="multipart/form-data">
-		<table class="table table-striped">
+	<!-- <form action="/" name="form1" method="get" enctype="multipart/form-data"> -->
+	<table class="table table-striped">
 		<tr>
 			<th>分类：</th>
 			<td>
-				<input type="text" name="category" style="resize:none;margin-top: 2px;margin-bottom: 2px;"  />
+				<input type="text" name="category" style="resize:none;margin-top: 2px;margin-bottom: 2px;" />
 			</td>
 		</tr>
-		
+
 		<tr>
 			<th>所属：</th>
-			<td><input type="text" name="belong" cols="20" rows="1" style="resize:none;margin-top: 2px;margin-bottom: 2px;"  /></td>
+			<td><input type="text" name="belong" cols="20" rows="1"
+					style="resize:none;margin-top: 2px;margin-bottom: 2px;" /></td>
 		</tr>
-		
+
 		<tr>
 			<th>名称：</th>
-			<td><input type="text" name="name" style="resize:none;margin-top: 2px;margin-bottom: 2px;"  /></td>
+			<td><input type="text" name="name" style="resize:none;margin-top: 2px;margin-bottom: 2px;" /></td>
 		</tr>
-		
+
 		<tr>
 			<th>详细：</th>
-			<td><input type="text" name="detail" style="resize:none;margin-top: 2px; margin-bottom: 2px; height: 100px; width: 500px;"  /></td>
+			<td><input type="text" name="detail"
+					style="resize:none;margin-top: 2px; margin-bottom: 2px; height: 100px; width: 500px;" /></td>
 		</tr>
-		
+
 	</table>
 	<div>
 		<h4>上传照片：</h4>
@@ -38,43 +41,48 @@
 	</div>
 
 	<div>
-		<input id="submit" type="submit" value="确定提交" style="margin-top: 20px;">
+		<button id="submit" type="submit" style="margin-top: 20px;">
+			确定提交
+		</button>
 	</div>
-</form>
-<script type="text/javascript">
-	document.getElementById('submit').onclick = function(){
-		//这里就是提交按钮点击的相应函数，可以把合约相关的东西里面
-		
-		var info = get_item();	//获取用户填写的信息
-		
-		//后面是合约部分了
-	}
-	
-	function get_item(){
-		// 函数将返回这个页面上用户填写的信息（赶工，就不写判空检查了）
-		// 函数饭后的是一个JSON格式的字符串
-		var category = document.getElementsByName('category').value;
-		var belong = document.getElementsByName('belong').value;
-		var name = document.getElementsByName('name').value;
-		var detail = document.getElementsByName('detail').value;
-		var js_obj = {
-			category:category,
-			belong:belong,
-			name:name,
-			detail:detail
+	<!-- </form> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/web3.min.js"></script>
+	<script src="js/truffle-contract.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript">
+		document.getElementById('submit').onclick = function () {
+			var info = get_item();	//获取用户填写的信息
+			App.createItem(info.category, info.belong, info.name, info.detail, get_back2index);
 		}
-		return JSON.stringify(js_obj);
-	}
-	
-	function get_back2index(){
-		//这个函数将提示提交成功并在两秒后返回主页
-		window.alert("提交成功，将在两秒后返回主页");
-		setTimeout(set_herf, 2000);
-	}
-	
-	function set_herf(){
-		window.location.href = 'index.html';
-	}
-</script>
+
+		function get_item() {
+			// 函数将返回这个页面上用户填写的信息
+			// 函数饭后的是一个JSON格式的字符串
+			var category = document.getElementsByName('category')[0].value;
+			var belong = document.getElementsByName('belong')[0].value;
+			var name = document.getElementsByName('name')[0].value;
+			var detail = document.getElementsByName('detail')[0].value;
+			var js_obj = {
+				category: category,
+				belong: belong,
+				name: name,
+				detail: detail
+			}
+			return js_obj;
+		}
+
+		function get_back2index() {
+			//这个函数将提示提交成功并在两秒后返回主页
+			window.alert("提交成功，将在两秒后返回主页");
+			setTimeout(set_herf, 2000);
+		}
+
+		function set_herf() {
+			window.location.href = 'index.html';
+		}
+	</script>
 </body>
+
 </html>
