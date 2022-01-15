@@ -24,16 +24,16 @@
 	<div class="row" style="background-color: #5DADE2;">
 		<div class="col-md-4" style="height: 400px;">
 
-			<img class="center-block img-thumbnail" alt="Responsive image" id="img"
-				style="margin-top: 20%;margin-bottom: 20%;height: 200px;">
+			<img class="center-block" alt="Responsive image" id="img"
+				style="margin-top: 20%;margin-bottom: 20%;height: 200px;" src="image/empty.png">
 
 		</div>
 		<div class="col-md-8" style="height: 400px;">
 			<div style="margin-top: 12%;margin-bottom: 12%;">
-				<h1 id="name" class="text-center text-white">蔡元培</h1>
-				<h3 id="category" class="text-center text-white">北京大学</h3>
-				<h3 id="belong" class="text-center text-white">软件与微电子学院</h3>
-				<h4 id="detail" class="text-center text-white">北大第一任校长；教授</h4>
+				<h1 id="name" class="text-center text-white"></h1>
+				<h3 id="category" class="text-center text-white"></h3>
+				<h3 id="belong" class="text-center text-white"></h3>
+				<h4 id="detail" class="text-center text-white"></h4>
 			</div>
 		</div>
 	</div>
@@ -119,6 +119,8 @@
 				}, 100);
 			}
 			itemID = Number(arg.split('=')[1]);
+			$("img").attr("src", "image/ho" + Math.ceil(Math.random() * 5) + ".jpg");
+			// $("img").addClass("img-thumbnail");
 			setTimeout(init_item, 300);
 		}
 		function init_item() {
@@ -127,7 +129,6 @@
 				$("#category").html(item.category);
 				$("#belong").html(item.belong);
 				$("#detail").html(item.detail);
-				$("img").src = "image/ho" + Math.ceil(Math.random() * 5) + ".jpg"
 				for (let i = 0; i < item.scores.length; i++)
 					addRow(i + 1, item.scores[i], item.reviews[i]);
 			})

@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 contract Review {
     struct Comment {
         address addr;    // 评论的人
-        uint256 rating; // 评分，1~10
+        uint8 rating; // 评分，1~10
         string content; // 具体评价内容
     }
     struct Item {
@@ -36,7 +36,7 @@ contract Review {
     // 写评论
     function makeComment(
         uint256 itemID,
-        uint256 rating,
+        uint8 rating,
         string memory content
     ) public returns (uint256) {
         Item storage it = items[itemID];
@@ -67,7 +67,7 @@ contract Review {
     function readComment(uint256 itemID, uint256 commentID)
         public
         view
-        returns (string memory, uint256 rating)
+        returns (string memory, uint8)
     {
         Item storage it = items[itemID];
         return (it.comments[commentID].content, it.comments[commentID].rating);

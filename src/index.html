@@ -57,7 +57,7 @@
 				App.initAllItems().then(data => {
 					let all_items = data;
 					if(all_items.length != 0){
-						document.getElementById('empty').display = 'none';
+						document.getElementById('empty').remove();
 						for (i = 0; i < all_items.length; ++i) 
 							generate_one_item(all_items[i], i);
 					}
