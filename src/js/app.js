@@ -61,7 +61,7 @@ App = {
       }
       var a = accounts[0];
       App.contracts.Review.deployed().then(instance => {
-        return instance.createItem(name, { from: a });
+        return instance.createItem(name, category, belong, detail, { from: a });
       })
         .then(callback)
         .catch(err => console.log(err.message));
@@ -85,13 +85,20 @@ App = {
   readItem: async function (itemID) {
     let instance = await App.contracts.Review.deployed();
     let item = await instance.readItem.call(itemID);
-    return {
+    let ret = {
       name: item[0],
-      category: '未知',
-      belong: '未知',
-      detail: 'wtf',
-      scores: item[3].map(x => x.toNumber())
+      category: item[1],
+      belong: item[2],
+      detail: item[3],
+      scores: [],
+      reviews: []
+    };
+    for (let i=0;i<item[4]; i++){
+      let t = await instance.readComment.call(itemID, i);
+      ret.scores.push(t[1].toNumber());
+      ret.reviews.push(t[0]);
     }
+    return ret;
   }
 };
 

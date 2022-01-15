@@ -85,7 +85,7 @@
 				<thead>
 					<tr>
 						<th>编号</th>
-						<th>评论人</th>
+						<!-- <th>评论人</th> -->
 						<th>评分</th>
 						<th>评语</th>
 					</tr>
@@ -129,7 +129,7 @@
 				$("#belong").html(item.belong);
 				$("#detail").html(item.detail);
 				for (let i = 0; i < item.scores.length; i++)
-					addRow(i + 1, 'you know who', item.scores[i], '哈哈哈');
+					addRow(i + 1, item.scores[i], item.reviews[i]);
 			})
 		}
 		$(document).ready(function () {

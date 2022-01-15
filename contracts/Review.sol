@@ -1,5 +1,5 @@
 pragma solidity ^0.5.0;
-//pragma experimental ABIEncoderV2;
+pragma experimental ABIEncoderV2;
 
 contract Review {
     struct Comment {
@@ -15,8 +15,6 @@ contract Review {
         uint256 commentCnt;    // 评论数量
         mapping(uint256 => Comment) comments; // 此项目的所有评论
         string details;        // 详细信息
-        // string[] infoAttrs; // 具体信息，比如学校、出版时间等
-        // string[] infoVals; // 具体信息值，比如北大、2012年5月等
     }
     uint256 public itemCnt;
     mapping(uint256 => Item) public items; // 所有的老师
@@ -27,6 +25,7 @@ contract Review {
     ) public returns (uint256) {
         Item storage it = items[itemCnt];
         itemCnt = itemCnt + 1;
+        it.addr = msg.sender;
         it.name = name;
         it.classification = classification;
         it.belongs = belongs;
@@ -36,7 +35,6 @@ contract Review {
 
     // 写评论
     function makeComment(
-        address addr,
         uint256 itemID,
         uint256 rating,
         string memory content
@@ -44,7 +42,7 @@ contract Review {
         Item storage it = items[itemID];
         Comment storage com = it.comments[it.commentCnt];
         it.commentCnt = it.commentCnt + 1;
-        com.addr = addr;
+        com.addr = msg.sender;
         com.rating = rating;
         com.content = content;
         return it.commentCnt - 1;
@@ -58,21 +56,15 @@ contract Review {
             string memory,
             string memory,
             string memory,
+            string memory,
             uint256
         )
     {
         Item storage it = items[itemID];
-        // uint256 ratings = 0;
-        // for (uint256 i = 0; i < it.commentCnt; i++) {
-        //     ratings = ratings + it.comments[i].rating;
-        // }
-        // if(it.commentCnt != 0) ratings = ratings / it.commentCnt;
-        // else ratings = 0;
-        return (it.name, it.classification, it.belongs, it.commentCnt);
+        return (it.name, it.classification, it.belongs, it.details, it.commentCnt);
     }
-
     // 查看评论内容
-    function readCommentContent(uint256 itemID, uint256 commentID)
+    function readComment(uint256 itemID, uint256 commentID)
         public
         view
         returns (string memory, uint256 rating)
