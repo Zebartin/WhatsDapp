@@ -7,44 +7,44 @@
 	<title>添加新的Item</title>
 </head>
 
-<body style="background-image:url(image/background_image.jpg); background-repeat:no-repeat; height: 100%; width: 100%;">
+<body style="background-image:url(image/background_image.jpg); background-repeat:no-repeat;">
 	<!-- <form action="/" name="form1" method="get" enctype="multipart/form-data"> -->
-	<table class="table table-striped">
-		<tr>
-			<th>分类：</th>
-			<td>
-				<input type="text" name="category" style="resize:none;margin-top: 2px;margin-bottom: 2px;" />
-			</td>
-		</tr>
+	<h1 style="margin-left: 2%">WhatsAPP</h1>
+	<div style="height: 100%; width: 100%; margin: 10%;">
+		<table class="table table-striped">
+			<tr>
+				<th>学校：</th>
+				<td>
+					<input type="text" name="category" style="resize:none;margin-top: 2px;margin-bottom: 2px;" />
+				</td>
+			</tr>
 
-		<tr>
-			<th>所属：</th>
-			<td><input type="text" name="belong" cols="20" rows="1" style="resize:none;margin-top: 2px;margin-bottom: 2px;" />
-			</td>
-		</tr>
+			<tr>
+				<th>学院：</th>
+				<td><input type="text" name="belong" cols="20" rows="1" style="resize:none;margin-top: 2px;margin-bottom: 2px;" />
+				</td>
+			</tr>
 
-		<tr>
-			<th>名称：</th>
-			<td><input type="text" name="name" style="resize:none;margin-top: 2px;margin-bottom: 2px;" /></td>
-		</tr>
+			<tr>
+				<th>姓名：</th>
+				<td><input type="text" name="name" style="resize:none;margin-top: 2px;margin-bottom: 2px;" /></td>
+			</tr>
 
-		<tr>
-			<th>详细：</th>
-			<td><input type="text" name="detail"
-					style="resize:none;margin-top: 2px; margin-bottom: 2px; height: 100px; width: 500px;" /></td>
-		</tr>
+			<tr>
+				<th>介绍：</th>
+				<td><input type="text" name="detail"
+						style="resize:none;margin-top: 2px; margin-bottom: 2px; height: 100px; width: 500px;" /></td>
+			</tr>
 
-	</table>
-	<div>
-		<h4>上传照片：</h4>
-		<input type="file" accept="image/*" name="image">
+		</table>
+
+		<div>
+			<button id="submit" type="submit" style="margin-top: 20px;">
+				确定提交
+			</button>
+		</div>
 	</div>
-
-	<div>
-		<button id="submit" type="submit" style="margin-top: 20px;">
-			确定提交
-		</button>
-	</div>
+	
 	<!-- </form> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
