@@ -88,19 +88,17 @@ App = {
     });
   },
 
-makeComment: function (i, j, k, event) {
-  let itemID = i;
-  let rating = j;
-  let content = k;
-  // TODO: 从event中获取
+makeComment: function (itemID, grade, review, callback) {
   web3.eth.getAccounts(function (error, accounts) {
     if (error) {
       console.log(error);
     }
     var a = accounts[0];
     App.contracts.Review.deployed().then(instance => {
-      return instance.makeComment(itemID, rating, content, { from: a });
-    }).catch(err => console.log(err.message));
+      return instance.makeComment(itemID, grade, review, { from: a });
+    })
+    .then(callback)
+    .catch(err => console.log(err.message));
   });
 },
 

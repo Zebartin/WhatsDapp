@@ -78,7 +78,7 @@
 			if (one_item.scores.length == 0)
 				score.innerHTML = '暂无评分';
 			else
-				score.innerHTML = sumScore / one_item.scores.length
+				score.innerHTML = Math.round(sumScore / one_item.scores.length * 10) / 10
 
 			item.appendChild(category);
 			item.appendChild(belong);

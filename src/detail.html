@@ -65,7 +65,7 @@
 						<h5>您的评分：</h5>
 					</div>
 					<div class="col-md-4" id="grade">
-						<h5>10</h5>
+						
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -108,14 +108,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 	<script src="bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
-	<!--commit.js-->
-	<script src="js/commit.js"></script>
 	<script src="js/table.js"></script>
 	<script src="js/grade.js"></script>
 	<script src="js/web3.min.js"></script>
 	<script src="js/truffle-contract.js"></script>
 	<script src="js/app.js"></script>
 	<script type="text/javascript">
+		let itemID;
 		function init() {
 			let arg = window.location.href.split('?')[1];
 			if (arg.search(/^id=\d+$/) == -1) {
@@ -124,18 +123,31 @@
 					window.location.href = 'index.html';
 				}, 100);
 			}
-			let id = Number(arg.split('=')[1]);
-			setTimeout(() => {
-				App.readItem(id).then(item => {
-					$("#name").html(item.name);
-					$("#category").html(item.category);
-					$("#belong").html(item.belong);
-					$("#detail").html(item.detail);
-					for (let i = 0; i<item.scores.length; i++)
-						addRow(i+1,'you know who', item.scores[i], '哈哈哈');
-				})
-			}, 300);
+			itemID = Number(arg.split('=')[1]);
+			setTimeout(init_item, 300);
 		}
+		function init_item() {
+			App.readItem(itemID).then(item => {
+				$("#name").html(item.name);
+				$("#category").html(item.category);
+				$("#belong").html(item.belong);
+				$("#detail").html(item.detail);
+				for (let i = 0; i < item.scores.length; i++)
+					addRow(i + 1, 'you know who', item.scores[i], '哈哈哈');
+			})
+		}
+		$(document).ready(function () {
+			$('#com').click(function () {
+				var review = $("#review").val();
+				var grade = $("#grade").text();
+				App.makeComment(itemID, grade, review, () => {
+					refreshTable();
+					init_item();
+					$("#review").val('');
+					$("#grade").html('');
+				});
+			})
+		})
 	</script>
 </body>
 
