@@ -4,23 +4,6 @@ App = {
 
   init: async function () {
     console.log('app init');
-    // Load pets.
-    // $.getJSON('../pets.json', function(data) {
-    //   var petsRow = $('#petsRow');
-    //   var petTemplate = $('#petTemplate');
-
-    //   for (i = 0; i < data.length; i ++) {
-    //     petTemplate.find('.panel-title').text(data[i].name);
-    //     petTemplate.find('img').attr('src', data[i].picture);
-    //     petTemplate.find('.pet-breed').text(data[i].breed);
-    //     petTemplate.find('.pet-age').text(data[i].age);
-    //     petTemplate.find('.pet-location').text(data[i].location);
-    //     petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
-
-    //     petsRow.append(petTemplate.html());
-    //   }
-    // });
-
     return await App.initWeb3();
   },
 
@@ -57,9 +40,6 @@ App = {
 
       // Set the provider for our contract
       App.contracts.Review.setProvider(App.web3Provider);
-
-      // Use our contract to retrieve and mark the adopted pets
-      // return App.initAllItems();
     });
   },
 
@@ -68,13 +48,13 @@ App = {
     let instance = await App.contracts.Review.deployed();
     let itemCnt = await instance.itemCnt.call();
     let data = [];
-    for (i = 0; i < itemCnt; i++){
+    for (i = 0; i < itemCnt; i++) {
       data.push(await App.readItem(i));
     }
     return data;
-},
-  createItem: function (category, belong, name, detail,callback) {
-    console.log('新增导师：'+name);
+  },
+  createItem: function (category, belong, name, detail, callback) {
+    console.log('新增导师：' + name);
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
@@ -83,82 +63,36 @@ App = {
       App.contracts.Review.deployed().then(instance => {
         return instance.createItem(name, { from: a });
       })
-      .then(callback)
-      .catch(err => console.log(err.message));
+        .then(callback)
+        .catch(err => console.log(err.message));
     });
   },
 
-makeComment: function (itemID, grade, review, callback) {
-  web3.eth.getAccounts(function (error, accounts) {
-    if (error) {
-      console.log(error);
+  makeComment: function (itemID, grade, review, callback) {
+    web3.eth.getAccounts(function (error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+      var a = accounts[0];
+      App.contracts.Review.deployed().then(instance => {
+        return instance.makeComment(itemID, grade, review, { from: a });
+      })
+        .then(callback)
+        .catch(err => console.log(err.message));
+    });
+  },
+
+  readItem: async function (itemID) {
+    let instance = await App.contracts.Review.deployed();
+    let item = await instance.readItem.call(itemID);
+    return {
+      name: item[0],
+      category: '未知',
+      belong: '未知',
+      detail: 'wtf',
+      scores: item[3].map(x => x.toNumber())
     }
-    var a = accounts[0];
-    App.contracts.Review.deployed().then(instance => {
-      return instance.makeComment(itemID, grade, review, { from: a });
-    })
-    .then(callback)
-    .catch(err => console.log(err.message));
-  });
-},
-
-readItem: async function (itemID) {
-  let instance = await App.contracts.Review.deployed();
-  let item = await instance.readItem.call(itemID);
-  return {
-    name: item[0],
-    category: '未知',
-    belong: '未知',
-    detail: 'wtf',
-    scores: item[3].map(x=>x.toNumber())
   }
-}
-  // markAdopted: function () {
-  //   var adoptionInstance;
-
-  //   App.contracts.Adoption.deployed().then(function(instance) {
-  //     adoptionInstance = instance;
-
-  //     return adoptionInstance.getAdopters.call();
-  //   }).then(function(adopters) {
-  //     for (i = 0; i < adopters.length; i++) {
-  //       if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-  //         $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
-  //       }
-  //     }
-  //   }).catch(function(err) {
-  //     console.log(err.message);
-  //   });
-
-  // },
-
-  // handleAdopt: function (event) {
-  //   event.preventDefault();
-
-  //   var petId = parseInt($(event.target).data('id'));
-
-  //   var adoptionInstance;
-
-  //   web3.eth.getAccounts(function(error, accounts) {
-  //     if (error) {
-  //       console.log(error);
-  //     }
-
-  //     var account = accounts[0];
-
-  //     App.contracts.Adoption.deployed().then(function(instance) {
-  //       adoptionInstance = instance;
-
-  //       // Execute adopt as a transaction by sending account
-  //       return adoptionInstance.adopt(petId, {from: account});
-  //     }).then(function(result) {
-  //       return App.markAdopted();
-  //     }).catch(function(err) {
-  //       console.log(err.message);
-  //     });
-  //   });
-  // }
-
 };
 
 $(function () {
