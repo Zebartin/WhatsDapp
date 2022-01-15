@@ -56,7 +56,7 @@
 			setTimeout(() => {
 				App.initAllItems().then(data => {
 					let all_items = data;
-					if(items.length != 0){
+					if(all_items.length != 0){
 						document.getElementById('empty').display = 'none';
 						for (i = 0; i < all_items.length; ++i) 
 							generate_one_item(all_items[i], i);
